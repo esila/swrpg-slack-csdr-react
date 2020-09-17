@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-swrpgslackcsdrreact-dev-151332-authRole",
+      "UnauthRoleArn": "arn:aws:iam::602068971051:role/amplify-swrpgslackcsdrreact-dev-151332-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::602068971051:role/amplify-swrpgslackcsdrreact-dev-151332-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-swrpgslackcsdrreact-dev-151332-deployment",
+      "UnauthRoleName": "amplify-swrpgslackcsdrreact-dev-151332-unauthRole",
+      "StackName": "amplify-swrpgslackcsdrreact-dev-151332",
+      "StackId": "arn:aws:cloudformation:us-east-1:602068971051:stack/amplify-swrpgslackcsdrreact-dev-151332/e2f38450-f919-11ea-a6be-0e09773e6f3f",
+      "AmplifyAppId": "dx9pz3jeh6wu2"
+    },
+    "categories": {
+      "auth": {
+        "swrpgslackcsdrreact771681b9": {}
+      }
+    }
+  }
+}
