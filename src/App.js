@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { API, Auth, graphqlOperation } from 'aws-amplify';
 import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
-import { listMessages, getMessagesByTimestamp } from './graphql/queries';
+import { getMessagesByTimestamp } from './graphql/queries';
 import { createMessage as createMessageMutation, deleteMessage as deleteMessageMutation } from "./graphql/mutations";
 import { onCreateMessage } from "./graphql/subscriptions";
 import './App.css';
@@ -12,6 +12,10 @@ function App() {
     const [user, setUser] = useState("");
     const [messages, setMessages] = useState([]);
     const [formData, setFormData] = useState(initialFormState);
+
+    // useRef to update current messages since I can't seem to access state in the async subscribe
+    const latestMessages = useRef([]);
+    latestMessages.current = messages;
 
     useEffect(() => {
         fetchMessages();
@@ -33,7 +37,8 @@ function App() {
     async function subscribeMessages() {
         await API.graphql(graphqlOperation(onCreateMessage)).subscribe({
             next: subonCreateMessage => {
-                fetchMessages();
+                //console.log(`subscribed message: ${JSON.stringify(subonCreateMessage.value.data.onCreateMessage)}`);
+                setMessages([...latestMessages.current, subonCreateMessage.value.data.onCreateMessage]);
             }
         })
     }
@@ -41,7 +46,7 @@ function App() {
     async function createMessage(timestamp) {
         if (!formData.message || !formData.user || !formData.type) return;
         await API.graphql({ query: createMessageMutation, variables: { input: {...formData, timestamp: timestamp} } });
-        setMessages([ ...messages, formData ]);
+        // Subscription takes care of rerender
         setFormData({...initialFormState, user: user});
     }
 
