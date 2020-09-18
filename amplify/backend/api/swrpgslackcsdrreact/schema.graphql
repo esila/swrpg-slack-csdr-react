@@ -1,0 +1,7 @@
+type Message @model {
+  id: ID!
+  message: String!
+  timestamp: String
+  user: String!
+  userImage: String
+}
