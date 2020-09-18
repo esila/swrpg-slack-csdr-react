@@ -5,6 +5,7 @@ export const onCreateMessage = /* GraphQL */ `
   subscription OnCreateMessage {
     onCreateMessage {
       id
+      type
       message
       timestamp
       user
@@ -18,6 +19,7 @@ export const onUpdateMessage = /* GraphQL */ `
   subscription OnUpdateMessage {
     onUpdateMessage {
       id
+      type
       message
       timestamp
       user
@@ -31,6 +33,7 @@ export const onDeleteMessage = /* GraphQL */ `
   subscription OnDeleteMessage {
     onDeleteMessage {
       id
+      type
       message
       timestamp
       user

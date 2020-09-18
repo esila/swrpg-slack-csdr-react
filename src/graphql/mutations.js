@@ -8,6 +8,7 @@ export const createMessage = /* GraphQL */ `
   ) {
     createMessage(input: $input, condition: $condition) {
       id
+      type
       message
       timestamp
       user
@@ -24,6 +25,7 @@ export const updateMessage = /* GraphQL */ `
   ) {
     updateMessage(input: $input, condition: $condition) {
       id
+      type
       message
       timestamp
       user
@@ -40,6 +42,7 @@ export const deleteMessage = /* GraphQL */ `
   ) {
     deleteMessage(input: $input, condition: $condition) {
       id
+      type
       message
       timestamp
       user

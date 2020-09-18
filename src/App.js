@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { API, Auth } from 'aws-amplify';
+import { API, Auth, graphqlOperation } from 'aws-amplify';
 import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
-import { listMessages } from './graphql/queries';
-import { createMessage as createMessageMutation } from "./graphql/mutations";
+import { listMessages, getMessagesByTimestamp } from './graphql/queries';
+import { createMessage as createMessageMutation, deleteMessage as deleteMessageMutation } from "./graphql/mutations";
+import { onCreateMessage } from "./graphql/subscriptions";
 import './App.css';
 
-const initialFormState = { message: "", };
+const initialFormState = { message: "", type: "swrpg" };
 
 function App() {
     const [user, setUser] = useState("");
@@ -14,6 +15,7 @@ function App() {
 
     useEffect(() => {
         fetchMessages();
+        subscribeMessages();
         Auth.currentAuthenticatedUser({
             bypassCache: false
         }).then(user => {
@@ -24,16 +26,30 @@ function App() {
     }, []);
 
     async function fetchMessages() {
-        const apiData = await API.graphql({ query: listMessages});
-        setMessages(apiData.data.listMessages.items);
+        const apiData = await API.graphql(graphqlOperation(getMessagesByTimestamp, {sortDirection: 'ASC', type: 'swrpg'}));
+        setMessages(apiData.data.getMessagesByTimestamp.items);
     }
 
-    async function createMessage() {
-        if (!formData.message || !formData.user) return;
-        await API.graphql({ query: createMessageMutation, variables: { input: formData } });
+    async function subscribeMessages() {
+        await API.graphql(graphqlOperation(onCreateMessage)).subscribe({
+            next: subonCreateMessage => {
+                fetchMessages();
+            }
+        })
+    }
+
+    async function createMessage(timestamp) {
+        if (!formData.message || !formData.user || !formData.type) return;
+        await API.graphql({ query: createMessageMutation, variables: { input: {...formData, timestamp: timestamp} } });
         setMessages([ ...messages, formData ]);
         setFormData({...initialFormState, user: user});
     }
+
+     async function deleteMessage({ id }) {
+        await API.graphql({ query: deleteMessageMutation, variables: { input: { id } }});
+    }
+
+
     return (
     <div className="App">
         <div>
@@ -45,8 +61,9 @@ function App() {
         </div>
         <form onSubmit={(event) => {
             event.preventDefault();
-            //console.log(`${formData.user}: ${formData.message}`);
-            createMessage()
+            //console.log(`${formData.user}: ${formData.message}, ${formData.type}`);
+            const timestamp = new Date().toISOString();
+            createMessage(timestamp);
         }}>
             <input
                 style={{marginTop: "30px", marginBottom: "30px"}}
@@ -55,6 +72,18 @@ function App() {
                 value={formData.message}
             />
         </form>
+        <br/>
+        <button
+            onClick={(event) => {
+                event.preventDefault();
+                messages.map((msg) => {
+                    deleteMessage({id: msg.id});
+                    return 0;
+                })
+            }}
+        >
+            DELETE ALL
+        </button>
       <AmplifySignOut/>
     </div>
     );

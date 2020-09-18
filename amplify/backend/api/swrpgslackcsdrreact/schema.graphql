@@ -1,7 +1,11 @@
-type Message @model {
+type Message
+@model
+@key(name: "ByTimestamp", fields: [ "type", "timestamp" ], queryField: "getMessagesByTimestamp")
+{
   id: ID!
+  type: String!
   message: String!
-  timestamp: String
+  timestamp: AWSDateTime!
   user: String!
   userImage: String
 }
