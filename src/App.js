@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Auth } from 'aws-amplify';
-import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
+import { withAuthenticator } from '@aws-amplify/ui-react';
 import Chat from './Chat';
+import Sidebar from './Sidebar'
 import './App.css';
 
 const UserContext = React.createContext("");
 
-function App() {
+function InitApp() {
     const [user, setUser] = useState("");
 
     useEffect(() => {
@@ -22,8 +23,8 @@ function App() {
         <UserContext.Provider value={user}>
             <div className="App">
                 <div className="app__body">
-                    <Chat userContext={UserContext}/>
-                    <AmplifySignOut/>
+                    <Sidebar/>
+                    <Chat/>
                 </div>
             </div>
         </UserContext.Provider>
@@ -33,4 +34,8 @@ function App() {
 
 }
 
-export default withAuthenticator(App);
+const App = withAuthenticator(InitApp);
+export {
+    UserContext,
+    App
+}
