@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { API, graphqlOperation } from 'aws-amplify';
 import { getMessagesByTimestamp } from './graphql/queries';
 import { deleteMessage as deleteMessageMutation } from "./graphql/mutations";
@@ -8,6 +8,28 @@ import MessageInput from "./MessageInput"
 import './Chat.css';
 import StarBorderOutlinedIcon from "@material-ui/icons/StarBorderOutlined"
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined"
+
+function AutoScroller(props) {
+    const scrollerRef = useRef();
+    const autoScrollingRef = useRef(true);
+
+    function scrollToBottom() {
+        const scroller = scrollerRef.current;
+        if (scroller && autoScrollingRef.current === true) {
+            scroller.scrollTop = scroller.scrollHeight;
+        }
+    }
+
+    useEffect(scrollToBottom);
+
+    function handleScroll(event) {
+        const scroller = event.target;
+        const distanceToBottom = scroller.scrollHeight - (scroller.scrollTop + scroller.offsetHeight);
+        autoScrollingRef.current = distanceToBottom < 10
+    }
+
+    return <div {...props} onScroll={(e) => handleScroll(e)} ref={scrollerRef} />
+}
 
 function Chat() {
     const [messages, setMessages] = useState([]);
@@ -41,7 +63,7 @@ function Chat() {
 
 
     return (
-    <div className="chat">
+    <AutoScroller className="chat">
         <div className="chat__header">
             <div className="chat__headerLeft">
                 <h4 className="chat__channelName">
@@ -58,13 +80,13 @@ function Chat() {
         <div className="chat__messages">
             {messages.map((message, idx) => (
                 <Message
+                    key={idx}
                     message={message.message}
                     timestamp={message.timestamp}
                     user={message.user}
                     userImage={message.userImage}
                  />
             ))}
-
         </div>
         <MessageInput/>
         <br/>
@@ -80,7 +102,7 @@ function Chat() {
         >
             DELETE ALL
         </button>
-    </div>
+    </AutoScroller>
     );
 }
 

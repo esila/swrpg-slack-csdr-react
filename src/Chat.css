@@ -1,7 +1,8 @@
 .chat {
     flex: 0.7;
-    flex-grow: 1;
-    overflow-y: scroll;
+    /*flex-grow: 1;*/
+    /*overflow-y: scroll;*/
+    overflow: auto;
     padding-bottom: 150px;
 }
 
@@ -42,4 +43,9 @@
     border: 1px solid gray;
     border-radius: 3px;
     padding: 20px;
+}
+
+.chat__messages_foo {
+  overflow: auto;
+  flex: 1;
 }
