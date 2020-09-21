@@ -63,7 +63,7 @@ function Chat() {
 
 
     return (
-    <AutoScroller className="chat">
+    <div className="chat">
         <div className="chat__header">
             <div className="chat__headerLeft">
                 <h4 className="chat__channelName">
@@ -77,7 +77,7 @@ function Chat() {
                 </p>
             </div>
         </div>
-        <div className="chat__messages">
+        <AutoScroller className="chat__messages">
             {messages.map((message, idx) => (
                 <Message
                     key={idx}
@@ -87,7 +87,7 @@ function Chat() {
                     userImage={message.userImage}
                  />
             ))}
-        </div>
+        </AutoScroller>
         <MessageInput/>
         <br/>
         <button
@@ -102,7 +102,7 @@ function Chat() {
         >
             DELETE ALL
         </button>
-    </AutoScroller>
+    </div>
     );
 }
 
