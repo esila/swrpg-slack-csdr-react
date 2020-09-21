@@ -1,23 +1,41 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
+import './Sidebar.css';
 import { AmplifySignOut } from '@aws-amplify/ui-react';
 import { UserContext} from "./App";
-import './Sidebar.css';
+import SidebarOption from './SidebarOption';
+import initStats from './init_stats';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import CreateIcon from '@material-ui/icons/Create';
-import SidebarOption from './SidebarOption';
-import InsertCommentIcon from '@material-ui/icons/InsertComment';
-import InboxIcon from '@material-ui/icons/Inbox';
-import DraftsIcon from '@material-ui/icons/Drafts';
-import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
-import FileCopyIcon from '@material-ui/icons/FileCopy';
-import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
 import AppsIcon from '@material-ui/icons/Apps';
-import ExpandLessIcon from '@material-ui/icons/ExpandLess';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import AddIcon from '@material-ui/icons/Add';
+import BuildIcon from '@material-ui/icons/Build'
+
+function SidebarGroup({ group }) {
+    const [isExpanded, setisExpanded] = useState(false);
+
+    return (
+        <>
+            <div
+                onClick={() => {
+                    console.log(`isExpanded: ${isExpanded}`);
+                    return setisExpanded(!isExpanded);
+                }}
+            >
+                <SidebarOption Icon={BuildIcon} title="Skills" />
+            </div>
+            {isExpanded &&
+                <div className="group__items">
+                    {Object.keys(group).map((skill, idx) => (
+                        <SidebarOption key={idx} Icon={""} title={group[skill].name}/>)
+                    )}
+                </div>
+            }
+        </>
+    )
+}
 
 function Sidebar() {
     const user = useContext(UserContext);
+    const { generalSkills, combatSkills, knowledgeSkills } = initStats;
 
     return (
         <div className="sidebar">
@@ -31,18 +49,11 @@ function Sidebar() {
                 </div>
                 <CreateIcon/>
             </div>
-            <SidebarOption Icon={InsertCommentIcon} title="Threads"/>
-            <SidebarOption Icon={InboxIcon} title="Mentions & reactions"/>
-            <SidebarOption Icon={DraftsIcon} title="Saved Items"/>
-            <SidebarOption Icon={BookmarkBorderIcon} title="Channel browser"/>
-            <SidebarOption Icon={PeopleAltIcon} title="People & user groups"/>
-            <SidebarOption Icon={AppsIcon} title="Apps"/>
-            <SidebarOption Icon={FileCopyIcon} title="FileBrowser"/>
-            <SidebarOption Icon={ExpandLessIcon} title="Show less"/>
+            <SidebarGroup group={generalSkills}/>
             <hr/>
-            <SidebarOption Icon={ExpandMoreIcon} title="Channels"/>
+            <SidebarOption Icon={AppsIcon} title="Weapons"/>
             <hr/>
-            <SidebarOption Icon={AddIcon} title="Add Channel"/>
+            <SidebarOption Icon={AppsIcon} title="Talents & Special Abilities"/>
             <hr/>
             <AmplifySignOut/>
         </div>
