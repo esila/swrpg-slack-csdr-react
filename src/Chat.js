@@ -6,8 +6,6 @@ import { onCreateMessage } from "./graphql/subscriptions";
 import Message from "./Message"
 import MessageInput from "./MessageInput"
 import './Chat.css';
-import StarBorderOutlinedIcon from "@material-ui/icons/StarBorderOutlined"
-import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined"
 
 function AutoScroller(props) {
     const scrollerRef = useRef();
@@ -31,7 +29,7 @@ function AutoScroller(props) {
     return <div {...props} onScroll={(e) => handleScroll(e)} ref={scrollerRef} />
 }
 
-function MainContent() {
+function Chat() {
     const [messages, setMessages] = useState([]);
 
     // useRef to update current messages since I can't seem to access state in the async subscribe
@@ -63,46 +61,33 @@ function MainContent() {
 
 
     return (
-    <div className="chat">
-        <div className="chat__header">
-            <div className="chat__headerLeft">
-                <h4 className="chat__channelName">
-                    <strong>  #FFG-STARWARS-RPG  </strong>
-                    <StarBorderOutlinedIcon/>
-                </h4>
-            </div>
-            <div className="chat__headerRight">
-                <p>
-                    <InfoOutlinedIcon /> Details
-                </p>
-            </div>
-        </div>
-        <AutoScroller className="chat__messages">
-            {messages.map((message, idx) => (
-                <Message
-                    key={idx}
-                    message={message.message}
-                    timestamp={message.timestamp}
-                    user={message.user}
-                    userImage={message.userImage}
-                 />
-            ))}
-        </AutoScroller>
-        <MessageInput/>
-        <button
-            className="chat__delete"
-            onClick={(event) => {
-                event.preventDefault();
-                messages.map((msg) => {
-                    deleteMessage({id: msg.id});
-                    return 0;
-                })
-            }}
-        >
-            DELETE ALL
-        </button>
-    </div>
+        <>
+            <AutoScroller className="chat__messages">
+                {messages.map((message, idx) => (
+                    <Message
+                        key={idx}
+                        message={message.message}
+                        timestamp={message.timestamp}
+                        user={message.user}
+                        userImage={message.userImage}
+                     />
+                ))}
+            </AutoScroller>
+            <MessageInput/>
+            <button
+                className="chat__delete"
+                onClick={(event) => {
+                    event.preventDefault();
+                    messages.map((msg) => {
+                        deleteMessage({id: msg.id});
+                        return 0;
+                    })
+                }}
+            >
+                DELETE ALL
+            </button>
+        </>
     );
 }
 
-export default MainContent;
+export default Chat;

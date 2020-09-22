@@ -1,0 +1,50 @@
+.maincontent {
+    flex: 1;
+    /*flex-grow: 1;*/
+    /*overflow-y: scroll;*/
+    padding-bottom: 150px;
+}
+
+.maincontent__header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px;
+    border-bottom: 1px solid lightgray;
+}
+
+.maincontent__channelName{
+    display: flex;
+    text-transform: lowercase;
+}
+
+.maincontent__channelName > .MuiSvgIcon-root {
+    margin-left: 10px;
+    font-size: 18px;
+}
+
+.maincontent__headerRight > p {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+}
+
+.maincontent__headerRight > p > .MuiSvgIcon-root {
+    margin-right: 5px !important;
+    font-size: 16px;
+}
+
+.maincontent__delete {
+    position: fixed;
+    bottom: 30px;
+    right: 10px;
+    width: 10%;
+    border: 1px solid gray;
+    border-radius: 3px;
+    padding: 20px;
+}
+
+.maincontent__messages {
+    height: 700px;
+    overflow: auto;
+}
