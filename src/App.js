@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Auth } from 'aws-amplify';
 import { withAuthenticator } from '@aws-amplify/ui-react';
-import Chat from './Chat';
-import Sidebar from './Sidebar'
+import MainContent from './MainContent';
+import Sidebar from './Sidebar';
 import './App.css';
 
 const UserContext = React.createContext("");
 
 function InitApp() {
+    const contentSourceNames = ["chat", "skills", "weapons", "talents"];
+    const [isActiveIndex, setIsActiveIndex] = useState(0);
     const [user, setUser] = useState("");
 
     useEffect(() => {
@@ -23,8 +25,16 @@ function InitApp() {
         <UserContext.Provider value={user}>
             <div className="App">
                 <div className="app__body">
-                    <Sidebar/>
-                    <Chat/>
+                    <Sidebar
+                        contentSourceNames={contentSourceNames}
+                        isActiveIndex={isActiveIndex}
+                        setIsActiveIndex={setIsActiveIndex}
+                    />
+                    <MainContent
+                        contentSourceNames={contentSourceNames}
+                        isActiveIndex={isActiveIndex}
+                        setIsActiveIndex={setIsActiveIndex}
+                    />
                 </div>
             </div>
         </UserContext.Provider>

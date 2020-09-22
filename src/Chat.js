@@ -31,7 +31,7 @@ function AutoScroller(props) {
     return <div {...props} onScroll={(e) => handleScroll(e)} ref={scrollerRef} />
 }
 
-function Chat() {
+function MainContent() {
     const [messages, setMessages] = useState([]);
 
     // useRef to update current messages since I can't seem to access state in the async subscribe
@@ -105,4 +105,4 @@ function Chat() {
     );
 }
 
-export default Chat;
+export default MainContent;

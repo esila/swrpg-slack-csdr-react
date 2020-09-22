@@ -8,34 +8,10 @@ import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import CreateIcon from '@material-ui/icons/Create';
 import AppsIcon from '@material-ui/icons/Apps';
 import BuildIcon from '@material-ui/icons/Build'
+import ChatBubble from "@material-ui/icons/ChatBubble";
 
-function SidebarGroup({ group }) {
-    const [isExpanded, setisExpanded] = useState(false);
-
-    return (
-        <>
-            <div
-                onClick={() => {
-                    console.log(`isExpanded: ${isExpanded}`);
-                    return setisExpanded(!isExpanded);
-                }}
-            >
-                <SidebarOption Icon={BuildIcon} title="Skills" />
-            </div>
-            {isExpanded &&
-                <div className="group__items">
-                    {Object.keys(group).map((skill, idx) => (
-                        <SidebarOption key={idx} Icon={""} title={group[skill].name}/>)
-                    )}
-                </div>
-            }
-        </>
-    )
-}
-
-function Sidebar() {
+function Sidebar({ contentSourceNames, isActiveIndex, setIsActiveIndex }) {
     const user = useContext(UserContext);
-    const { generalSkills, combatSkills, knowledgeSkills } = initStats;
 
     return (
         <div className="sidebar">
@@ -49,11 +25,23 @@ function Sidebar() {
                 </div>
                 <CreateIcon/>
             </div>
-            <SidebarGroup group={generalSkills}/>
+            <SidebarOption
+                Icon={ChatBubble}
+                title="Chat"
+                index={0}
+                setIsActiveIndex={setIsActiveIndex}
+            />
             <hr/>
-            <SidebarOption Icon={AppsIcon} title="Weapons"/>
+            <SidebarOption
+                Icon={BuildIcon}
+                title="Skills"
+                index={1}
+                setIsActiveIndex={setIsActiveIndex}
+            />
             <hr/>
-            <SidebarOption Icon={AppsIcon} title="Talents & Special Abilities"/>
+            <SidebarOption Icon={AppsIcon} title="Weapons" index={2} setIsActiveIndex={setIsActiveIndex}/>
+            <hr/>
+            <SidebarOption Icon={AppsIcon} title="Talents & Special Abilities" index={3} setIsActiveIndex={setIsActiveIndex}/>
             <hr/>
             <AmplifySignOut/>
         </div>

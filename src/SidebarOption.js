@@ -1,10 +1,13 @@
 import React from 'react';
 import './SidebarOption.css';
 
-function SidebarOption({Icon, title}) {
+function SidebarOption({Icon, title, index, setIsActiveIndex}) {
 
     return (
-        <div className="sidebarOption">
+        <div
+            className="sidebarOption"
+            onClick={() => setIsActiveIndex(index) }
+        >
             {Icon && <Icon className="sidebarOption__icon" />}
             {Icon ?( <h3>
                 {title}
