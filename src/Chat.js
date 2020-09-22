@@ -89,7 +89,6 @@ function Chat() {
             ))}
         </AutoScroller>
         <MessageInput/>
-        <br/>
         <button
             className="chat__delete"
             onClick={(event) => {
