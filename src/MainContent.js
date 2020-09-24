@@ -18,6 +18,10 @@ function MainContent({ contentSourceNames, isActiveIndex }) {
                         <StarBorderOutlinedIcon/>
                     </h4>
                 </div>
+                <div className="maincontent__headerMid">
+                    <p>Wound Threshold: 0 | 12</p>
+                    <p>Strain Threshold: 0 | 15</p>
+                </div>
                 <div className="maincontent__headerRight">
                     <p>
                         <InfoOutlinedIcon /> Details
