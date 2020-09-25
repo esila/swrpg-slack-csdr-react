@@ -52,3 +52,45 @@ export const deleteMessage = /* GraphQL */ `
     }
   }
 `;
+export const createFabricObject = /* GraphQL */ `
+  mutation CreateFabricObject(
+    $input: CreateFabricObjectInput!
+    $condition: ModelFabricObjectConditionInput
+  ) {
+    createFabricObject(input: $input, condition: $condition) {
+      id
+      fabricId
+      data
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateFabricObject = /* GraphQL */ `
+  mutation UpdateFabricObject(
+    $input: UpdateFabricObjectInput!
+    $condition: ModelFabricObjectConditionInput
+  ) {
+    updateFabricObject(input: $input, condition: $condition) {
+      id
+      fabricId
+      data
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteFabricObject = /* GraphQL */ `
+  mutation DeleteFabricObject(
+    $input: DeleteFabricObjectInput!
+    $condition: ModelFabricObjectConditionInput
+  ) {
+    deleteFabricObject(input: $input, condition: $condition) {
+      id
+      fabricId
+      data
+      createdAt
+      updatedAt
+    }
+  }
+`;
