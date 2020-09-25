@@ -78,7 +78,7 @@ function Chat() {
                         userImage={message.userImage}
                      />
                 ))}
-                <div ref={messagesEndRef} style={{display: "none"}}/>
+                <div ref={messagesEndRef} />
             </AutoScroller>
             <MessageInput/>
             <button
