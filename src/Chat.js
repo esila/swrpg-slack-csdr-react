@@ -34,12 +34,18 @@ function Chat() {
 
     // useRef to update current messages since I can't seem to access state in the async subscribe
     const latestMessages = useRef([]);
+    const messagesEndRef = useRef();
     latestMessages.current = messages;
 
     useEffect(() => {
         fetchMessages();
         subscribeMessages();
+        scrollToBottom();
     }, []);
+
+    function scrollToBottom() {
+        messagesEndRef.current.scrollIntoView({ behavior: 'smooth' })
+    }
 
     async function fetchMessages() {
         const apiData = await API.graphql(graphqlOperation(getMessagesByTimestamp, {sortDirection: 'ASC', type: 'swrpg'}));
@@ -72,6 +78,7 @@ function Chat() {
                         userImage={message.userImage}
                      />
                 ))}
+                <div ref={messagesEndRef} style={{display: "none"}}/>
             </AutoScroller>
             <MessageInput/>
             <button
