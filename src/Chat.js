@@ -40,7 +40,7 @@ function Chat() {
     useEffect(() => {
         fetchMessages();
         subscribeMessages();
-        scrollToBottom();
+        //scrollToBottom();
     }, []);
 
     function scrollToBottom() {
@@ -78,7 +78,6 @@ function Chat() {
                         userImage={message.userImage}
                      />
                 ))}
-                <div ref={messagesEndRef} />
             </AutoScroller>
             <MessageInput/>
             <button
