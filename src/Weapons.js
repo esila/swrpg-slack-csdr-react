@@ -12,26 +12,26 @@ function MapCanvas({ fabricObjects }) {
 
     useEffect(() => {
         initCanvas();
-    }, [fabricObjects, canvasEl]);
+    }, [fabricObjects]);
 
     function initCanvas() {
         const canvas = canvasState || new fabric.Canvas(canvasEl.current);
         let canvasDict = {};
 
         const fabricData = fabricObjects.map((elem, idx) => {
-            //console.log(elem);
+            console.log(elem);
             canvasDict[elem.fabricId] = elem.id;
             return elem.data;
         });
         canvas.loadFromJSON(`{"objects": [${fabricData}]}`);
         //console.log(`CANVAS: ${JSON.stringify(canvas.toJSON(['fabricId']))}`);
 
-        canvas.on({
-            'object:moved': (e) => {
+        !canvasState && canvas.on({
+            'object:modified': (e) => {
                 const fabricId = e.target.toJSON(['fabricId']).fabricId;
                 const graphId = canvasDict[fabricId];
                 const resp = updateFabricObject(graphId, JSON.stringify(e.target.toJSON(['fabricId'])));
-                console.log(`UPDATE RESP: ${JSON.stringify(resp)}`);
+                //console.log(`UPDATE RESP: ${JSON.stringify(resp)}`);
                 //console.log(JSON.stringify(e.target.toJSON(['fabricId'])));
             }
         });
@@ -43,25 +43,25 @@ function MapCanvas({ fabricObjects }) {
     }
 
     async function updateFabricObject(graphId, fabricData) {
-        console.log("GOT HERE");
-        console.log(`UPDATE INPUT: ${JSON.stringify(fabricData)} / ${graphId}`);
+        //console.log("GOT HERE");
+        //console.log(`UPDATE INPUT: ${JSON.stringify(fabricData)} / ${graphId}`);
         if (!fabricData || !graphId) return;
-        console.log("GOT PAST DATA TYPE");
+        //console.log("GOT PAST DATA TYPE");
         await API.graphql({query: updateFabricObjectMutation, variables: {
             input: {
                 id: graphId,
                 data: fabricData
             }}})
             .then(success => {
-                console.log(`SUCCESS: ${JSON.stringify(success)}`);
+                //console.log(`SUCCESS: ${JSON.stringify(success)}`);
             },
                 error => {
-                console.log(`ERROR: ${JSON.stringify(error)}`);
+                //console.log(`ERROR: ${JSON.stringify(error)}`);
             })
     }
     return fabricObjects.length > 0 ? (
         <>
-            <canvas ref={canvasEl} id="my-fabric-canvas" width="400" height="300" />
+            <canvas ref={canvasEl} id="my-fabric-canvas" width="900" height="600" />
         </>
     ):
         <div></div>
@@ -132,8 +132,8 @@ function Weapons() {
     async function subscribeFabricObjects() {
         await API.graphql(graphqlOperation(onUpdateFabricObject)).subscribe({
             next: subonUpdateFabricObject => {
-                console.log(`subscribed message: ${JSON.stringify(subonUpdateFabricObject.value.data.onUpdateFabricObject)}`);
-                setFabricObjects([subonUpdateFabricObject.value.data.onUpdateFabricObject]);
+                //console.log(`subscribed message: ${JSON.stringify(subonUpdateFabricObject.value.data.onUpdateFabricObject)}`);
+                //setFabricObjects([subonUpdateFabricObject.value.data.onUpdateFabricObject]);
                 fetchFabricObjects();
             }
         })
