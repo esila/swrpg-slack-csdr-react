@@ -5,23 +5,17 @@ import {createFabricObject as createFabricObjectMutation, updateFabricObject as 
 import {onUpdateFabricObject} from "./graphql/subscriptions";
 import {listFabricObjects} from "./graphql/queries";
 
-const initialState = {
-    version: "3.6.3",
-    objects: []
-};
-
 function MapCanvas({ fabricObjects }) {
     const canvasEl = useRef(null);
-    const [canvasState, setCanvasState] = useState(initialState);
+    const [canvasState, setCanvasState] = useState();
 
 
     useEffect(() => {
         initCanvas();
-    }, [canvasEl]);
+    }, [fabricObjects, canvasEl]);
 
     function initCanvas() {
-        const canvas = new fabric.Canvas(canvasEl.current);
-        //const canvas = new fabric.Canvas(canvasEl.current);
+        const canvas = canvasState || new fabric.Canvas(canvasEl.current);
         let canvasDict = {};
 
         const fabricData = fabricObjects.map((elem, idx) => {
@@ -41,6 +35,7 @@ function MapCanvas({ fabricObjects }) {
                 //console.log(JSON.stringify(e.target.toJSON(['fabricId'])));
             }
         });
+        setCanvasState(canvas);
         // UseEffect's cleanup function
         return () => {
           canvas.dispose();
