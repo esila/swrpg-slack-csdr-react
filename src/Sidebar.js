@@ -43,6 +43,8 @@ function Sidebar({ contentSourceNames, isActiveIndex, setIsActiveIndex }) {
             <hr/>
             <SidebarOption Icon={AppsIcon} title="Talents & Special Abilities" index={3} setIsActiveIndex={setIsActiveIndex}/>
             <hr/>
+            <SidebarOption Icon={AppsIcon} title="Visuals" index={4} setIsActiveIndex={setIsActiveIndex}/>
+            <hr/>
             <AmplifySignOut/>
         </div>
     )

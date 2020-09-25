@@ -2,7 +2,8 @@ import React from 'react';
 import Chat from './Chat';
 import Skills from './Skills';
 import Weapons from './Weapons';
-import Talents from "./Talents";
+import Talents from './Talents';
+import Visuals from './Visuals';
 import StarBorderOutlinedIcon from "@material-ui/core/SvgIcon/SvgIcon";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 import './MainContent.css';
@@ -32,6 +33,7 @@ function MainContent({ contentSourceNames, isActiveIndex }) {
             {contentName === "skills" && <Skills/>}
             {contentName === "weapons" && <Weapons/>}
             {contentName === "talents" && <Talents/>}
+            {contentName === "visuals" && <Visuals/>}
         </div>
     )
 }

@@ -55,7 +55,7 @@ function Chat() {
         })
     }
 
-     async function deleteMessage({ id }) {
+    async function deleteMessage({ id }) {
         await API.graphql({ query: deleteMessageMutation, variables: { input: { id } }});
     }
 

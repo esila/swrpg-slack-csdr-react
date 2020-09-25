@@ -8,7 +8,7 @@ import './App.css';
 const UserContext = React.createContext("");
 
 function InitApp() {
-    const contentSourceNames = ["chat", "skills", "weapons", "talents"];
+    const contentSourceNames = ["chat", "skills", "weapons", "talents", "visuals"];
     const [isActiveIndex, setIsActiveIndex] = useState(0);
     const [user, setUser] = useState("");
 
