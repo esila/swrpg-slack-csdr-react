@@ -10,50 +10,10 @@ type Message
   userImage: String
 }
 
-type FabricObject {
-  type: String
-  version: String
-  originX: String
-  originY: String
-  left: Int
-  top: Int
-  width: Int
-  height: Float
-  fill: String
-  stroke: String
-  strokeWidth: Int
-  strokeDashArray: String
-  strokeLineCap: String
-  strokeDashOffset: Int
-  strokeLineJoin: String
-  strokeMiterLimit: Int
-  scaleX: Int
-  scaleY: Int
-  angle: Int
-  flipX: Boolean
-  flipY: Boolean
-  opacity: Int
-  shadow: String
-  visible: Boolean
-  backgroundColor: String
-  fillRule: String
-  paintFirst: String
-  globalCompositeOperation: String
-  skewX: Int
-  skewY: Int
-  text: String
-  fontSize: Int
-  fontWeight: String
-  fontFamily: String
-  fontStyle: String
-  lineHeight: Float
-  underline: Boolean
-  overline: Boolean
-  linethrough: Boolean
-  textAlign: String
-  textBackgroundColor: String
-  charSpacing: Int
-  minWidth: Int
-  splitByGrapheme: Boolean
+type FabricObject
+@model {
+  id: ID!
+  fabricId: String!
+  data: String
 }
 
