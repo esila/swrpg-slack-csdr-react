@@ -36,7 +36,6 @@ function Visuals() {
 
     return fabricObjects.length > 0 ? (
         <div>
-            <h1>Visuals</h1>
             <MapCanvas fabricObjects={fabricObjects}/>
         </div>
     ):
