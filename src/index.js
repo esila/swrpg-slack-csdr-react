@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter, Route } from "react-router-dom";
 import './index.css';
 import {App} from './App';
 import * as serviceWorker from './serviceWorker';
@@ -9,7 +10,9 @@ Amplify.configure(config);
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+      <BrowserRouter>
+          <Route path="/" component={App} />
+      </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );

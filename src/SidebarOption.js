@@ -1,12 +1,14 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import './SidebarOption.css';
 
-function SidebarOption({Icon, title, index, setIsActiveIndex}) {
+function SidebarOption({Icon, title, pathname}) {
+    let history = useHistory();
 
     return (
         <div
             className="sidebarOption"
-            onClick={() => setIsActiveIndex(index) }
+            onClick={() => history.push(pathname)  }
         >
             {Icon && <Icon className="sidebarOption__icon" />}
             {Icon ?( <h3>

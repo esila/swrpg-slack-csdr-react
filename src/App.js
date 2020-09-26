@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import { Auth } from 'aws-amplify';
 import { withAuthenticator } from '@aws-amplify/ui-react';
 import MainContent from './MainContent';
@@ -9,7 +10,6 @@ const UserContext = React.createContext("");
 
 function InitApp() {
     const contentSourceNames = ["chat", "skills", "weapons", "talents", "visuals"];
-    const [isActiveIndex, setIsActiveIndex] = useState(0);
     const [user, setUser] = useState("");
 
     useEffect(() => {
@@ -25,16 +25,19 @@ function InitApp() {
         <UserContext.Provider value={user}>
             <div className="App">
                 <div className="app__body">
-                    <Sidebar
-                        contentSourceNames={contentSourceNames}
-                        isActiveIndex={isActiveIndex}
-                        setIsActiveIndex={setIsActiveIndex}
-                    />
-                    <MainContent
-                        contentSourceNames={contentSourceNames}
-                        isActiveIndex={isActiveIndex}
-                        setIsActiveIndex={setIsActiveIndex}
-                    />
+                    <Sidebar contentSourceNames={contentSourceNames} />
+                    <Switch>
+                        {contentSourceNames.map((name) => {
+                            return (
+                                <Route path={`/${name}`}>
+                                    <MainContent />
+                                </Route>
+                            )
+                        })}
+                        <Route>
+                            <Redirect to="/chat" />
+                        </Route>
+                    </Switch>
                 </div>
             </div>
         </UserContext.Provider>
